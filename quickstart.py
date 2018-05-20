@@ -7,6 +7,7 @@ from apiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file, client, tools
 import datetime
+import sqlite3
 
 # Setup the Calendar API
 SCOPES = 'https://www.googleapis.com/auth/calendar'
@@ -26,15 +27,23 @@ events_result = service.events().list(calendarId='primary', timeMin=now,
 events = events_result.get('items', [])
 
 #add to write schedule log 
-f=open('schedule.txt','w')
+#f=open('schedule.txt','w')
+conn=sqlite3.connect('schedule.db')
+cur=conn.cursor()
+#cur.execute('''CREATE TABLE schedule (start TEXT,title TEXT)''')
+cur.execute('''CREATE TABLE IF NOT EXISTS schedule (start TEXT,title TEXT)''')
 #add to write schedule log 
 if not events:
     print('No upcoming events found.')
 for event in events:
     start = event['start'].get('dateTime', event['start'].get('date'))
     print(start, event['summary'])
-    f.write(start)
-    f.write(event['summary'].encode('utf-8')+'\n')
-f.close()
+#    params=(start)
+    cur.execute("INSERT INTO schedule VALUES(?,?)",(start,event['summary'],))
+ #   f.write(start)
+ #   f.write(event['summary'].encode('utf-8')+'\n')
+#f.close()
+conn.commit()
+conn.close()
 
 
