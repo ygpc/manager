@@ -1,7 +1,7 @@
 Project: manager of google calendar
 
 Google calendar is very useful and cool.
-But I want to see some paticular paticular schedule in the list and get good suggestion related to the schedule etc..
+But I want to see some paticular schedule in the list and get good suggestion related to the schedule etc..
 
 To tell the truth,I'm interested in the application which a github user tries to make,and I want to make alike application!
 
