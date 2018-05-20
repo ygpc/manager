@@ -25,9 +25,16 @@ events_result = service.events().list(calendarId='primary', timeMin=now,
                                       orderBy='startTime').execute()
 events = events_result.get('items', [])
 
+#add to write schedule log 
+f=open('schedule.txt','w')
+#add to write schedule log 
 if not events:
     print('No upcoming events found.')
 for event in events:
     start = event['start'].get('dateTime', event['start'].get('date'))
     print(start, event['summary'])
+    f.write(start)
+    f.write(event['summary'].encode('utf-8')+'\n')
+f.close()
+
 
