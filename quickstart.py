@@ -31,7 +31,7 @@ events = events_result.get('items', [])
 conn=sqlite3.connect('schedule.db')
 cur=conn.cursor()
 #cur.execute('''CREATE TABLE schedule (start TEXT,title TEXT)''')
-cur.execute('''CREATE TABLE IF NOT EXISTS schedule (start TEXT,title TEXT)''')
+cur.execute('''CREATE TABLE IF NOT EXISTS schedule (year TEXT,month TEXT,day TEXT,start TEXT,title TEXT)''')
 cur.execute('''DELETE FROM schedule''')
 #add to write schedule log 
 if not events:
@@ -40,7 +40,11 @@ for event in events:
     start = event['start'].get('dateTime', event['start'].get('date'))
     print(start, event['summary'])
 #    params=(start)
-    cur.execute("INSERT INTO schedule VALUES(?,?)",(start,event['summary'],))
+    year=start[0:4]
+    month=start[5:7]
+    day=start[8:10]
+    start_time=start[11:16]
+    cur.execute("INSERT INTO schedule VALUES(?,?,?,?,?)",(year,month,day,start_time,event['summary'],))
  #   f.write(start)
  #   f.write(event['summary'].encode('utf-8')+'\n')
 #f.close()
