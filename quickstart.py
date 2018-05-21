@@ -32,6 +32,7 @@ conn=sqlite3.connect('schedule.db')
 cur=conn.cursor()
 #cur.execute('''CREATE TABLE schedule (start TEXT,title TEXT)''')
 cur.execute('''CREATE TABLE IF NOT EXISTS schedule (start TEXT,title TEXT)''')
+cur.execute('''DELETE FROM schedule''')
 #add to write schedule log 
 if not events:
     print('No upcoming events found.')
